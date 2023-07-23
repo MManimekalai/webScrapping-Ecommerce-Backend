@@ -7,11 +7,15 @@ const mongoURL = process.env.mongoURL
 // const mongoDBURI = 'mongodb+srv://manimekalaieee123:jkquzbD0UaHMXTHs@cluster0.ezedxlm.mongodb.net/';
 
 // Connect to MongoDB
-mongoose.connect(mongoURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB Atlas'))
-.catch((error) => console.error('Error connecting to MongoDB Atlas:', error.message));
+console.log('mongoURL:', mongoURL);
 
-// module.exports = {mongoDBURI}
+mongoose
+  .connect(mongoURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch((error) => {
+    console.error('Error connecting to MongoDB Atlas:', error.message);
+    process.exit(1);
+  });
