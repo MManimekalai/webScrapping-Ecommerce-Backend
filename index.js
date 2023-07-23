@@ -15,9 +15,9 @@ NODE_SERVER.use(cors())
 
 NODE_SERVER.use('/api/v1', APP_SERVER);
 
-const PORT = process.env.port || 8000;
+const port = process.env.PORT || 8000
 
 
 
 
-NODE_SERVER.listen(PORT, 'localhost', () => console.log('Server working on PORT', PORT));
+NODE_SERVER.listen(port, 'localhost', () => console.log('Server working on PORT', port));
