@@ -2,8 +2,8 @@ const express = require('express');
 const APP_SERVER = express.Router();
 const bodyparser = require('body-parser'); // Fix: Use the correct variable name
 const cron = require('node-cron');
-
 const mongoose = require('mongoose');
+const mongoURL = process.env.mongoURL
 
 // Middleware to parse incoming requests with JSON and urlencoded payloads
 APP_SERVER.use(bodyparser.urlencoded({ extended: true }));
