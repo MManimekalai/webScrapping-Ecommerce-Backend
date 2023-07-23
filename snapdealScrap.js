@@ -1,8 +1,10 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
-const dbConfig = require('./dbconfig');
-const { snapdealproduct } = require('./productModel'); // Assuming you have the productModel.js in the same directory
+
+const {
+  snapdealproduct
+} = require('./productModel'); // Assuming you have the productModel.js in the same directory
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const headers = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
@@ -14,7 +16,9 @@ const url = 'https://www.snapdeal.com/products/electronics-bluetooth-speakers?so
 const getProductDetails = async () => {
   try {
     // Make an HTTP GET request to the specified URL with custom headers
-    const response = await axios.get(url, { headers });
+    const response = await axios.get(url, {
+      headers
+    });
     const $ = cheerio.load(response.data);
 
     // Array to store product details
@@ -51,7 +55,7 @@ const getProductDetails = async () => {
     });
 
     // Connect to MongoDB Atlas
-    await mongoose.connect(dbConfig.mongoDBURI, {
+    await mongoose.connect(mongoURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -76,4 +80,6 @@ const getProductDetails = async () => {
 };
 
 // Export the getProductDetails function to be used in other modules
-module.exports = { getProductDetails };
+module.exports = {
+  getProductDetails
+};

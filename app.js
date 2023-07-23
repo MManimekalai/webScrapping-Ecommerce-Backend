@@ -2,7 +2,7 @@ const express = require('express');
 const APP_SERVER = express.Router();
 const bodyparser = require('body-parser'); // Fix: Use the correct variable name
 const cron = require('node-cron');
-const dbConfig = require('./dbconfig')
+
 const mongoose = require('mongoose');
 
 // Middleware to parse incoming requests with JSON and urlencoded payloads
@@ -82,7 +82,7 @@ cron.schedule('0 */12 * * *', async () => {
 // Endpoint to search for products using a search term (query parameter)
 APP_SERVER.get('/search/:searchTerm', async (req, res) => {
 
-  await mongoose.connect(dbConfig.mongoDBURI, {
+  await mongoose.connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -147,7 +147,7 @@ APP_SERVER.get('/search/:searchTerm', async (req, res) => {
 // Endpoint to drop all collections from databases
 APP_SERVER.post('/drop-collections', async (req, res) => {
 
-  await mongoose.connect(dbConfig.mongoDBURI, {
+  await mongoose.connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
