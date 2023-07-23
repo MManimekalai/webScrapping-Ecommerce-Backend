@@ -7,7 +7,7 @@ const mongoURL = process.env.mongoURL
 // const mongoDBURI = 'mongodb+srv://manimekalaieee123:jkquzbD0UaHMXTHs@cluster0.ezedxlm.mongodb.net/';
 
 // Connect to MongoDB
-console.log('mongoURL:', mongoURL);
+// console.log('mongoURL:', mongoURL);
 
 mongoose
   .connect(mongoURL, {
