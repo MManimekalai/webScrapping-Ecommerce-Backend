@@ -19,7 +19,7 @@ NODE_SERVER.get('/', function (resquest, response) {
 
 NODE_SERVER.use('/api/v1', APP_SERVER);
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 3001
 
 
 
