@@ -13,6 +13,10 @@ require('./dbconfig');
 
 NODE_SERVER.use(cors())
 
+NODE_SERVER.get('/', function (resquest, response) {
+    response.send("Testing");
+})
+
 NODE_SERVER.use('/api/v1', APP_SERVER);
 
 const port = process.env.PORT || 8000
