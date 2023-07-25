@@ -19,9 +19,8 @@ NODE_SERVER.get('/', function (resquest, response) {
 
 NODE_SERVER.use('/api/v1', APP_SERVER);
 
-const port = process.env.PORT || 3001
+const port = 4000;
 
-
-
-
-NODE_SERVER.listen(port, 'localhost', () => console.log('Server working on PORT', port));
+NODE_SERVER.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
