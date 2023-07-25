@@ -1,6 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
+const connectDB = require('./dbconfig')
 
 const {
   flipkartproduct
@@ -51,10 +52,7 @@ const getProductDetails = async () => {
     });
 
     // Connect to MongoDB Atlas
-    await mongoose.connect(mongoURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await connectDB();
 
     // Save the productTitles to the MongoDB collection using the flipkartproduct model
     await flipkartproduct.insertMany(productTitles);

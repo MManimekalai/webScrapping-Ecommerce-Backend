@@ -3,7 +3,7 @@ const APP_SERVER = express.Router();
 const bodyparser = require('body-parser'); // Fix: Use the correct variable name
 const cron = require('node-cron');
 const mongoose = require('mongoose');
-const mongoURL = process.env.mongoURL
+const connectDB = require('./dbconfig')
 
 // Middleware to parse incoming requests with JSON and urlencoded payloads
 APP_SERVER.use(bodyparser.urlencoded({ extended: true }));
@@ -82,10 +82,7 @@ cron.schedule('0 */12 * * *', async () => {
 // Endpoint to search for products using a search term (query parameter)
 APP_SERVER.get('/search/:searchTerm', async (req, res) => {
 
-  await mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await connectDB();
 
   const {searchTerm} = req.params; // Assuming search term is passed as a query parameter
   const page = parseInt(req.query.page) || 1;
@@ -147,10 +144,7 @@ APP_SERVER.get('/search/:searchTerm', async (req, res) => {
 // Endpoint to drop all collections from databases
 APP_SERVER.post('/drop-collections', async (req, res) => {
 
-  await mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await connectDB();
 
   try {
     // Get the list of all collection names in the connected database

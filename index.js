@@ -11,6 +11,8 @@ NODE_SERVER.use(bodyparser.json());
 ENV.config();
 require('./dbconfig');
 
+
+
 NODE_SERVER.use(cors())
 
 NODE_SERVER.get('/', function (resquest, response) {
