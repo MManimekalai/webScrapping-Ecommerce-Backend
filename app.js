@@ -163,4 +163,62 @@ APP_SERVER.post('/drop-collections', async (req, res) => {
   }
 });
 
+APP_SERVER.get('/data', async (req, res) => {
+  await connectDB();
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10; // Number of results per page
+  try {
+    const skip = (page - 1) * limit;
+
+    console.log('Executing amazonproduct search...');
+    const amazonResults = await amazonproduct.find({}, '-_id')
+      .skip(skip)
+      .limit(limit);
+      
+    console.log('amazonproduct search results:', amazonResults);
+
+    console.log('Executing snapdealproduct search...');
+    const snapdealResults = await snapdealproduct.find({}, '-_id')
+      .skip(skip)
+      .limit(limit);
+      
+    console.log('snapdealproduct search results:', snapdealResults);
+
+    console.log('Executing flipkartproduct search...');
+    const flipkartResults = await flipkartproduct.find({}, '-_id')
+      .skip(skip)
+      .limit(limit);
+      
+    console.log('flipkartproduct search results:', flipkartResults);
+
+    // Merge the results from all collections into a single array
+    const combinedResults = [...flipkartResults, ...amazonResults, ...snapdealResults];
+
+    if (combinedResults.length === 0) {
+      // No matching products found for the search term
+      res.json({
+        status: 'success',
+        message: 'No matching products found for the search term.',
+        data: [],
+      });
+    } else {
+      // Optionally, sort and paginate the combinedResults
+
+      // Send the combined and paginated results as the API response
+      res.json({
+        status: 'success',
+        message: 'Search successful.',
+        data: combinedResults,
+      });
+    }
+  } catch (error) {
+    console.error('Error during search:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred during the search.',
+      error: error.message,
+    });
+  }
+});
+
 module.exports = APP_SERVER;
