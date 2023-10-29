@@ -1,24 +1,22 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
-const connectDB = require('./dbconfig')
+const connectDB = require('./dbconfig');
 
-const {
-  flipkartproduct
-} = require('./productModel'); // Assuming you have the productModel.js in the same directory
+const { flipkartproduct } = require('./productModel'); // Assuming you have the productModel.js in the same directory
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const headers = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
 };
 
-const url = 'https://www.flipkart.com/laptops-store?fm=neo%2Fmerchandising&iid=M_5f59c0c6-82a6-4f55-a29e-e93f2f9d5f87_1_372UD5BXDFYS_MC.WB1CFS0X26D1&otracker=hp_rich_navigation_2_1.navigationCard.RICH_NAVIGATION_Electronics~Laptop%2Band%2BDesktop~Laptops_WB1CFS0X26D1&otracker1=hp_rich_navigation_PINNED_neo%2Fmerchandising_NA_NAV_EXPANDABLE_navigationCard_cc_2_L2_view-all&cid=WB1CFS0X26D1';
+const url = 'https://www.flipkart.com/kitchen-cookware-serveware/tableware-dinnerware/mugs/pr?sid=upp%2Ci7t%2Cmsi&otracker=nmenu_sub_Home%20%26%20Furniture_0_Coffee%20Mugs';
 
 // Function to fetch product details from the Flipkart website
 const getProductDetails = async () => {
   try {
     // Make an HTTP GET request to the specified URL with custom headers
     const response = await axios.get(url, {
-      headers
+      headers,
     });
     const $ = cheerio.load(response.data);
 
@@ -45,7 +43,7 @@ const getProductDetails = async () => {
         rating,
         numberOfRatings,
         finalPriceWithOffer,
-        originalPrice
+        originalPrice,
       };
 
       productTitles.push(product);
@@ -75,5 +73,5 @@ const getProductDetails = async () => {
 
 // Export the getProductDetails function to be used in other modules
 module.exports = {
-  getProductDetails
+  getProductDetails,
 };

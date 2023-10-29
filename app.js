@@ -4,6 +4,13 @@ const bodyparser = require('body-parser'); // Fix: Use the correct variable name
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const connectDB = require('./dbconfig')
+const cors = require('cors')
+
+APP_SERVER.use(cors({
+  origin: 'http://localhost:3000', // Allow requests from your local frontend
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+}));
 
 // Middleware to parse incoming requests with JSON and urlencoded payloads
 APP_SERVER.use(bodyparser.urlencoded({ extended: true }));
@@ -184,12 +191,12 @@ APP_SERVER.get('/data', async (req, res) => {
       
     console.log('snapdealproduct search results:', snapdealResults);
 
-    // console.log('Executing flipkartproduct search...');
-    // const flipkartResults = await flipkartproduct.find({}, '-_id')
-    //   .skip(skip)
-    //   .limit(limit);
+    console.log('Executing flipkartproduct search...');
+    const flipkartResults = await flipkartproduct.find({}, '-_id')
+      .skip(skip)
+      .limit(limit);
       
-    // console.log('flipkartproduct search results:', flipkartResults);
+    console.log('flipkartproduct search results:', flipkartResults);
 
     // Merge the results from all collections into a single array
     const combinedResults = [ ...amazonResults, ...snapdealResults];
