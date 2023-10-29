@@ -184,15 +184,15 @@ APP_SERVER.get('/data', async (req, res) => {
       
     console.log('snapdealproduct search results:', snapdealResults);
 
-    console.log('Executing flipkartproduct search...');
-    const flipkartResults = await flipkartproduct.find({}, '-_id')
-      .skip(skip)
-      .limit(limit);
+    // console.log('Executing flipkartproduct search...');
+    // const flipkartResults = await flipkartproduct.find({}, '-_id')
+    //   .skip(skip)
+    //   .limit(limit);
       
-    console.log('flipkartproduct search results:', flipkartResults);
+    // console.log('flipkartproduct search results:', flipkartResults);
 
     // Merge the results from all collections into a single array
-    const combinedResults = [...flipkartResults, ...amazonResults, ...snapdealResults];
+    const combinedResults = [ ...amazonResults, ...snapdealResults];
 
     if (combinedResults.length === 0) {
       // No matching products found for the search term
